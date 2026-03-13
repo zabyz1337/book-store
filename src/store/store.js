@@ -51,6 +51,24 @@ function libraryReducer(state = initialState, action) {
       };
     }
 
+    case BOOK_UPDATE_INFO: {
+      const { id, title, author, year } = action.payload;
+
+      return {
+        ...state,
+        books: state.books.map((book) =>
+          book.id === id
+            ? {
+                ...book,
+                title: title ?? book.title,
+                author: author ?? book.author,
+                year: year ?? book.year,
+              }
+            : book,
+        ),
+        lastUpdated: new Date().toISOString(),
+      };
+    }
     default:
       return state;
   }
