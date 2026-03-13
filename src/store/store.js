@@ -11,7 +11,28 @@ const initialState = {
 };
 
 function libraryReducer(state = initialState, action) {
-  return state;
+  switch (action.type) {
+    case BOOK_ADD: {
+      const { title, author, year } = action.payload;
+
+      const newBook = {
+        id: Date.now() + Math.random(),
+        title,
+        author,
+        year,
+        isAvailable: true,
+      };
+
+      return {
+        ...state,
+        books: [...state.books, newBook],
+        lastUpdated: new Date().toISOString(),
+      };
+    }
+
+    default:
+      return state;
+  }
 }
 
 const store = createStore(libraryReducer);
