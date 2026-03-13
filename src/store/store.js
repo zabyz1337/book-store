@@ -69,6 +69,18 @@ function libraryReducer(state = initialState, action) {
         lastUpdated: new Date().toISOString(),
       };
     }
+
+    case BOOK_TOGGLE_AVAILABILITY: {
+      return {
+        ...state,
+        books: state.books.map((book) =>
+          book.id === action.payload
+            ? { ...book, isAvailable: !book.isAvailable }
+            : book,
+        ),
+        lastUpdated: new Date().toISOString(),
+      };
+    }
     default:
       return state;
   }
